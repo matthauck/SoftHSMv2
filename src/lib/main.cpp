@@ -1,7 +1,7 @@
 /*
  * Copyright (c)2010 SURFnet bv
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -10,7 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -43,7 +43,7 @@
 // TODO: contrary to the SoftHSM v2 requirements, PKCS #11 v2.20 is still
 //       implemented in stead of PKCS #11 v2.30 because the header files
 //       for PKCS #11 v2.30 are not yet available
-static CK_FUNCTION_LIST functionList = 
+static CK_FUNCTION_LIST functionList =
 {
 	// Version information
 	{ CRYPTOKI_VERSION_MAJOR, CRYPTOKI_VERSION_MINOR },
@@ -1010,13 +1010,13 @@ CK_RV C_GenerateKey(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_
 // Generate a key-pair using the specified mechanism
 CK_RV C_GenerateKeyPair
 (
-	CK_SESSION_HANDLE hSession, 
-	CK_MECHANISM_PTR pMechanism, 
-	CK_ATTRIBUTE_PTR pPublicKeyTemplate, 
-	CK_ULONG ulPublicKeyAttributeCount, 
-	CK_ATTRIBUTE_PTR pPrivateKeyTemplate, 
+	CK_SESSION_HANDLE hSession,
+	CK_MECHANISM_PTR pMechanism,
+	CK_ATTRIBUTE_PTR pPublicKeyTemplate,
+	CK_ULONG ulPublicKeyAttributeCount,
+	CK_ATTRIBUTE_PTR pPrivateKeyTemplate,
 	CK_ULONG ulPrivateKeyAttributeCount,
-	CK_OBJECT_HANDLE_PTR phPublicKey, 
+	CK_OBJECT_HANDLE_PTR phPublicKey,
 	CK_OBJECT_HANDLE_PTR phPrivateKey
 )
 {
@@ -1036,10 +1036,10 @@ CK_RV C_GenerateKeyPair
 CK_RV C_WrapKey
 (
 	CK_SESSION_HANDLE hSession,
-	CK_MECHANISM_PTR pMechanism, 
-	CK_OBJECT_HANDLE hWrappingKey, 
-	CK_OBJECT_HANDLE hKey, 
-	CK_BYTE_PTR pWrappedKey, 
+	CK_MECHANISM_PTR pMechanism,
+	CK_OBJECT_HANDLE hWrappingKey,
+	CK_OBJECT_HANDLE hKey,
+	CK_BYTE_PTR pWrappedKey,
 	CK_ULONG_PTR pulWrappedKeyLen
 )
 {
@@ -1058,13 +1058,13 @@ CK_RV C_WrapKey
 // Unwrap the specified key using the specified unwrapping key
 CK_RV C_UnwrapKey
 (
-	CK_SESSION_HANDLE hSession, 
-	CK_MECHANISM_PTR pMechanism, 
-	CK_OBJECT_HANDLE hUnwrappingKey, 
-	CK_BYTE_PTR pWrappedKey, 
+	CK_SESSION_HANDLE hSession,
+	CK_MECHANISM_PTR pMechanism,
+	CK_OBJECT_HANDLE hUnwrappingKey,
+	CK_BYTE_PTR pWrappedKey,
 	CK_ULONG ulWrappedKeyLen,
-	CK_ATTRIBUTE_PTR pTemplate, 
-	CK_ULONG ulCount, 
+	CK_ATTRIBUTE_PTR pTemplate,
+	CK_ULONG ulCount,
 	CK_OBJECT_HANDLE_PTR phKey
 )
 {
@@ -1083,11 +1083,11 @@ CK_RV C_UnwrapKey
 // Derive a key from the specified base key
 CK_RV C_DeriveKey
 (
-	CK_SESSION_HANDLE hSession, 
-	CK_MECHANISM_PTR pMechanism, 
-	CK_OBJECT_HANDLE hBaseKey, 
-	CK_ATTRIBUTE_PTR pTemplate, 
-	CK_ULONG ulCount, 
+	CK_SESSION_HANDLE hSession,
+	CK_MECHANISM_PTR pMechanism,
+	CK_OBJECT_HANDLE hBaseKey,
+	CK_ATTRIBUTE_PTR pTemplate,
+	CK_ULONG ulCount,
 	CK_OBJECT_HANDLE_PTR phKey
 )
 {
@@ -1176,5 +1176,20 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pRese
 	}
 
 	return CKR_FUNCTION_FAILED;
+}
+
+
+bool SOFTHSM_SetConfigLoader(const ConfigLoader* configLoader)
+{
+    try
+    {
+		return SoftHSM::i()->SetConfigLoader(configLoader);
+    }
+    catch(...)
+    {
+        FatalException();
+    }
+
+    return false;
 }
 

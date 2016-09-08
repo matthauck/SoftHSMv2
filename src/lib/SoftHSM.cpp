@@ -326,6 +326,7 @@ SoftHSM::SoftHSM()
 	slotManager = NULL;
 	sessionManager = NULL;
 	handleManager = NULL;
+    customConfigLoader = NULL;
 }
 
 // Destructor
@@ -450,7 +451,17 @@ CK_RV SoftHSM::C_Initialize(CK_VOID_PTR pInitArgs)
 #endif
 
 	// (Re)load the configuration
-	if (!Configuration::i()->reload(SimpleConfigLoader::i()))
+    ConfigLoader* config;
+    if (customConfigLoader != NULL)
+    {
+        config = customConfigLoader;
+    }
+    else
+    {
+        config = SimpleConfigLoader::i();
+    }
+
+	if (!Configuration::i()->reload(config))
 	{
 		return CKR_GENERAL_ERROR;
 	}
@@ -10555,4 +10566,10 @@ CK_RV SoftHSM::MechParamCheckRSAPKCSOAEP(CK_MECHANISM_PTR pMechanism)
 		return CKR_ARGUMENTS_BAD;
 	}
 	return CKR_OK;
+}
+
+bool SoftHSM::SetConfigLoader(ConfigLoader* configLoader)
+{
+    customConfigLoader = configLoader;
+    return true;
 }

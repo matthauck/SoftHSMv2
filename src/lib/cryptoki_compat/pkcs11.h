@@ -1715,6 +1715,11 @@ typedef struct ck_c_initialize_args *CK_C_INITIALIZE_ARGS_PTR;
 #pragma pack(pop, cryptoki)
 #endif
 
+// SoftHSM internals
+class ConfigLoader;
+
+bool SOFTHSM_SetConfigLoader(ConfigLoader* config);
+
 #if defined(__cplusplus)
 }
 #endif

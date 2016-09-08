@@ -169,6 +169,7 @@ public:
 	CK_RV C_GetFunctionStatus(CK_SESSION_HANDLE hSession);
 	CK_RV C_CancelFunction(CK_SESSION_HANDLE hSession);
 	CK_RV C_WaitForSlotEvent(CK_FLAGS flags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pReserved);
+    bool SetConfigLoader(ConfigLoader* configLoader);
 
 private:
 	// Constructor
@@ -190,6 +191,7 @@ private:
 	SlotManager* slotManager;
 	SessionManager* sessionManager;
 	HandleManager* handleManager;
+    ConfigLoader* customConfigLoader;
 
 	// Encrypt/Decrypt variants
 	CK_RV SymEncryptInit(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey);
